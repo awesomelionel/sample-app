@@ -4,8 +4,16 @@ require 'sinatra/assetpack'
 
 class App < Sinatra::Base
   register Sinatra::Flash
-  register Sinatra::Reloader
   register Sinatra::AssetPack
+
+  configure :production do
+    p "I'm in production"
+  end
+
+  configure :development do
+    p "I'm in development"
+    register Sinatra::Reloader
+  end
 
   assets do
     serve '/js', from: 'js'
@@ -27,6 +35,7 @@ class App < Sinatra::Base
   end
 
   get '/' do
+    #p @what
     haml :index
   end
 
